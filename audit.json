@@ -1,0 +1,18 @@
+{
+  "source_sha256": "5b974b4d9fe053a62ad0cd1217a5b9da4bb9c970cef89733468df6a746e84b89",
+  "source_rows": 9069,
+  "observed_do_rows": 8440,
+  "training_do_rows": 5673,
+  "complete_test_days": 113,
+  "do_range_mg_l": [
+    0.05,
+    13.12
+  ],
+  "observations_below_2_mg_l": 1320,
+  "seed": 20260919,
+  "python": "3.11.15",
+  "matplotlib": "3.11.2",
+  "pandas": "2.2.3",
+  "numpy": "2.3.5",
+  "sklearn": "1.8.0"
+}

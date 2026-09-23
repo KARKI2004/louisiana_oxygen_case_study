@@ -1,0 +1,12 @@
+.venv/
+REVIEW.md
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.DS_Store
+._*
+__MACOSX/
+Water quality & dissolved carbon in LA salt marsh*.csv

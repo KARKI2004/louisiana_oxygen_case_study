@@ -1,0 +1,385 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata>
+  <idinfo>
+    <citation>
+      <citeinfo>
+        <origin>Scott V. Mize</origin>
+        <origin>Ryder D. Myers</origin>
+        <origin>Songjie He</origin>
+        <origin>Camille L. Stagg</origin>
+        <origin>Emily N. Fromenthal</origin>
+        <pubdate>20250423</pubdate>
+        <title>High resolution water quality and dissolved carbon data from a coastal Louisiana salt marsh from 2022 to 2023 (ver. 2.0, July 2025)</title>
+        <geoform>tabular digital data</geoform>
+        <pubinfo>
+          <pubplace>ScienceBase</pubplace>
+          <publish>U.S. Geological Survey</publish>
+        </pubinfo>
+        <onlink>https://doi.org/10.5066/P13GBADQ</onlink>
+      </citeinfo>
+    </citation>
+    <descript>
+      <abstract>Continuous water quality sensor data were collected at USGS 292939089544400 Wilkinson Bayou cutoff north of Wilkinson Bay, LA gage. Field water quality measurements were collected using a YSI EXO2 water quality sonde equipped with a data logger to capture hourly data using sensors for measuring water temperature, specific conductance, salinity, pH, oxidation and reduction potential (ORP), fluorescent dissolved organic matter (fDOM), turbidity, and dissolved oxygen (DO). The monitor was housed in an 8-inch diameter polyvinyl chloride (PVC) pipe attached to a temporary wooden structure near the gage. Measurements were collected from a fixed mid-depth point in the water column. All data were collected using U.S. Geological Survey (USGS) protocols and data are stored in the National Water Information System (NWIS) database. Records processing of measurement results for fouling and drift corrections of the data followed the USGS Techniques and Methods for continuous water-quality monitors (Wagner et al., 2006), except for ORP and drift corrections for fDOM. ORP were uncorrected and were reported from the sonde directly. fDOM was evaluated for drift using periodic side-by-side comparisons with a new factory-calibrated sensor to check for lamp degradation in the sensor, and calibration checks were performed using on-site prepared fDOM standard. fDOM data have not been corrected for temperature, turbidity, or inner-filter effects (Booth et al., 2023). Turbidity drift corrections were applied using Wagner et al. (2006) except in some cases where it was determined not helpful to apply the correction based on unstable site conditions during the site visit. Sample results from June of 2022 to October 2023 are reported in this data release. 
+
+References:
+Booth, A., Fleck, J., Pellerin, B.A., Hansen, A., Etheridge, A., Foster, G.M., Graham, J.L., Bergamaschi, B.A., Carpenter, K.D., Downing, B.D., Rounds, S.A., and Saraceno, J., 2023, Field techniques for fluorescence measurements targeting dissolved organic matter, hydrocarbons, and wastewater in environmental waters: Principles and guidelines for instrument selection, operation and maintenance, quality assurance, and data reporting: U.S. Geological Survey Techniques and Methods, book 1, chap. D11, 41 p., https://doi.org/10.3133/tm1D11.
+
+Wagner, R.J., Boulger, R.W., Jr., Oblinger, C.J., and Smith, B.A., 2006, Guidelines and standard procedures for continuous water-quality monitors—Station operation, record computation, and data reporting: U.S. Geological Survey Techniques and Methods 1–D3, 51 p. + 8 attachments; accessed August 3, 2022, at https://pubs.usgs.gov/tm/2006/tm1D3/pdf/TM1D3.pdf.</abstract>
+      <purpose>These data were collected to quantify lateral flux of carbon from coastal wetlands in Louisiana.</purpose>
+      <supplinf>Author ORCIDs: Mize, S.V.(0000-0001-6751-5568);Myers, R.D.(0000-0002-1835-9615);He, S.(0000-0003-4814-8453);Stagg, C.L.(0000-0002-1125-7253);Fromenthal, E.N.(0009-0007-6043-7537)</supplinf>
+    </descript>
+    <timeperd>
+      <timeinfo>
+        <rngdates>
+          <begdate>20220616</begdate>
+          <enddate>20231024</enddate>
+        </rngdates>
+      </timeinfo>
+      <current>ground condition</current>
+    </timeperd>
+    <status>
+      <progress>Complete</progress>
+      <update>None planned</update>
+    </status>
+    <spdom>
+      <descgeog>Gage USGS 292939089544400, Wilkinson Bayou cutoff north of Wilkinson Bay, LA.</descgeog>
+      <bounding>
+        <westbc>-89.9123056100</westbc>
+        <eastbc>-89.9123056000</eastbc>
+        <northbc>29.4941100000</northbc>
+        <southbc>29.4941000000</southbc>
+      </bounding>
+    </spdom>
+    <keywords>
+      <theme>
+        <themekt>ISO 19115 Topic Category</themekt>
+        <themekey>biota</themekey>
+      </theme>
+      <theme>
+        <themekt>None</themekt>
+        <themekey>Dissolved carbon</themekey>
+        <themekey>Lateral flux</themekey>
+        <themekey>Coastal wetlands</themekey>
+        <themekey>Water quality</themekey>
+      </theme>
+      <theme>
+        <themekt>USGS Thesaurus</themekt>
+        <themekey>water quality</themekey>
+      </theme>
+      <theme>
+        <themekt>USGS Metadata Identifier</themekt>
+        <themekey>USGS:67c9d656d34ed3737708c9ff</themekey>
+      </theme>
+      <place>
+        <placekt>None</placekt>
+        <placekey>United States of America</placekey>
+        <placekey>Gulf coast</placekey>
+        <placekey>Louisiana</placekey>
+        <placekey>Barataria Basin</placekey>
+        <placekey>Wilkinson Bay</placekey>
+        <placekey>Wilkinson Bayou</placekey>
+      </place>
+    </keywords>
+    <accconst>None. Please see 'Distribution Info' for details.</accconst>
+    <useconst>None. Users are advised to read the dataset's metadata thoroughly to understand appropriate use and data limitations.</useconst>
+    <ptcontac>
+      <cntinfo>
+        <cntperp>
+          <cntper>Camille L Stagg</cntper>
+          <cntorg>U.S. Geological Survey, Southeast Region</cntorg>
+        </cntperp>
+        <cntpos>Research Ecologist</cntpos>
+        <cntaddr>
+          <addrtype>mailing address</addrtype>
+          <address>700 Cajundome Blvd</address>
+          <city>Lafayette</city>
+          <state>LA</state>
+          <postal>70506</postal>
+          <country>US</country>
+        </cntaddr>
+        <cntvoice>337-266-8537</cntvoice>
+        <cntfax>337-266-8586</cntfax>
+        <cntemail>staggc@usgs.gov</cntemail>
+      </cntinfo>
+    </ptcontac>
+    <crossref>
+      <citeinfo>
+        <origin>Amanda Booth</origin>
+        <origin>Jacob Fleck</origin>
+        <origin>Brian A. Pellerin</origin>
+        <origin>Angela Hansen</origin>
+        <origin>Alexandra Etheridge</origin>
+        <origin>Guy M. Foster</origin>
+        <origin>Jennifer L. Graham</origin>
+        <origin>Brian A. Bergamaschi</origin>
+        <origin>Kurt D. Carpenter</origin>
+        <origin>Bryan D. Downing</origin>
+        <origin>Stewart A. Rounds</origin>
+        <origin>John Franco Saraceno</origin>
+        <pubdate>2023</pubdate>
+        <title>Field techniques for fluorescence measurements targeting dissolved organic matter, hydrocarbons, and wastewater in environmental waters: Principles and guidelines for instrument selection, operation and maintenance, quality assurance, and data reporting</title>
+        <geoform>publication</geoform>
+        <pubinfo>
+          <pubplace>USGS Publications Warehouse</pubplace>
+          <publish>U.S. Geological Survey</publish>
+        </pubinfo>
+        <onlink>https://doi.org/10.3133/tm1D11</onlink>
+      </citeinfo>
+    </crossref>
+    <crossref>
+      <citeinfo>
+        <origin>Richard J. Wagner</origin>
+        <origin>Robert W. Boulger, Jr.</origin>
+        <origin>Carolyn J. Oblinger</origin>
+        <origin>Brett A. Smith</origin>
+        <pubdate>20060410</pubdate>
+        <title>Guidelines and Standard Procedures for Continuous Water-Quality Monitors: Station Operation, Record Computation, and Data Reporting</title>
+        <geoform>publication</geoform>
+        <pubinfo>
+          <pubplace>USGS Publications Warehouse</pubplace>
+          <publish>U.S. Geological Survey</publish>
+        </pubinfo>
+        <onlink>https://pubs.usgs.gov/tm/2006/tm1D3/pdf/TM1D3.pdf</onlink>
+      </citeinfo>
+    </crossref>
+  </idinfo>
+  <dataqual>
+    <attracc>
+      <attraccr>Water-quality attributes in this data release were quality assured for accuracy and consistency using USGS guidelines and standard procedures described in Wagner and others (2006). Water quality sensors are cleaned and checked between field deployments and if needed are calibrated with laboratory standards. In addition, sensors are periodically replaced or repaired based on signal diagnostics. The sonde data results are inspected for errors and corrections for signal drift and fouling are applied to the dataset using methods described in Wagner and others (2006).</attraccr>
+    </attracc>
+    <logic>Water-quality attributes in this data release were checked for duplication, omission, and general outliers and values appear to be within normal ranges expected for the deployment location. Measurement values that did not meet USGS guidelines were deleted or flagged dependent on the degree of discrepancy from the guidelines.</logic>
+    <complete>The dataset is composed of continuous hourly water-quality sensor measurement data from one location located at the USGS 292939089544400 Wilkinson Bayou cutoff north of Wilkinson Bay, LA gage. Some periods of record between June 2022 and October 2023 are missing and a data gap exists during times when equipment malfunction, weather, or other circumstance did not allow for the continuous collection of sensor data.</complete>
+    <posacc>
+      <horizpa>
+        <horizpar>Horizontal and vertical accuracy of water quality data collection was dependent on the deployment structure which housed the sonde. The structure is not expected to move in the horizontal or vertical direction although slight changes in position could occur over time. The sonde was placed at mid-depth on the structure in the same horizontal and vertical locations on the structure during the entire period of record presented in this data release. The resultant dataset represents the water quality measurements and changes associated with changing water levels at the location.</horizpar>
+      </horizpa>
+    </posacc>
+    <lineage>
+      <procstep>
+        <procdesc>Continuous water quality sensor data were collected at USGS 292939089544400 Wilkinson Bayou cutoff north of Wilkinson Bay, LA gage. Field water quality measurements were collected using a water quality sonde equipped with a data logger to capture hourly data using sensors for measuring water temperature, specific conductance, salinity, pH, oxidation and reduction potential, fluorescent dissolved organic matter (fDOM), turbidity, and dissolved oxygen (DO). Measurements were collected from a fixed mid-depth point in the water column near the gage. Data collection and processing of results followed the U.S. Geological Survey Techniques and Methods for continuous water-quality monitors except for instrument drift corrections for fDOM. fDOM was evaluated for drift using periodic side-by-side comparisons with a new factor calibrated sensor to check for lamp degradation in the sensor. Sample results from June of 2022 to October 2023 are reported in this data release.</procdesc>
+        <procdate>20241030</procdate>
+      </procstep>
+    </lineage>
+  </dataqual>
+  <eainfo>
+    <detailed>
+      <enttyp>
+        <enttypl>Water quality &amp; dissolved carbon in LA salt marsh</enttypl>
+        <enttypd>CSV sheet containing multiparameter water-quality sensor data for USGS 292939089544400 Wilkinson Bayou cutoff north of Wilkinson Bay, LA.</enttypd>
+        <enttypds>Producer Defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>Timestamp_UTCminus6</attrlabl>
+        <attrdef>Date (MM/DD/YYYY) and time (00:00) of water-quality sensor data collection</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <udom>Water quality data collection range from 6/16/2022 13:00:00 to 10/24/2022 10:00:00</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp Celsius</attrlabl>
+        <attrdef>Water temperature sensor measurement in degrees Celsius</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>1.06</rdommin>
+            <rdommax>36.28</rdommax>
+            <attrunit>Degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>SpCond microS/cm</attrlabl>
+        <attrdef>Specific conductance sensor measurement in microsiemens per centimeter</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>NA</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <rdom>
+            <rdommin>5885</rdommin>
+            <rdommax>39854</rdommax>
+            <attrunit>Microsiemens</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Sal psu</attrlabl>
+        <attrdef>Salinity sensor measurement in practical salinity units</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>NA</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <rdom>
+            <rdommin>3.18</rdommin>
+            <rdommax>25.44</rdommax>
+            <attrunit>Practical salinity units</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>pH</attrlabl>
+        <attrdef>pH sensor measurement in pH units</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>NA</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <rdom>
+            <rdommin>6.59</rdommin>
+            <rdommax>8.42</rdommax>
+            <attrunit>NA</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>ORP mV</attrlabl>
+        <attrdef>Oxidation-reduction potential sensor measurement in millivolts</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>NA</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <rdom>
+            <rdommin>-272.6</rdommin>
+            <rdommax>474.0</rdommax>
+            <attrunit>Millivolts</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>fDOM QSU</attrlabl>
+        <attrdef>Fluorescent dissolved organic matter sensor measurement in quinine sulphate units</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>NA</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <rdom>
+            <rdommin>4.77</rdommin>
+            <rdommax>142.48</rdommax>
+            <attrunit>Quinine sulphate units</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Turbidity FNU</attrlabl>
+        <attrdef>Turbidity sensor measurement in Formazin Nephelometric Units</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>NA</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <rdom>
+            <rdommin>2.1</rdommin>
+            <rdommax>118.7</rdommax>
+            <attrunit>Formazin nephelometric units</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>DO</attrlabl>
+        <attrdef>Dissolved oxygen in milligrams per liter</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0.05</rdommin>
+            <rdommax>13.12</rdommax>
+            <attrunit>mg/L</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+    </detailed>
+    <overview>
+      <eaover>Continuous water quality sensor data were collected at USGS 292939089544400 Wilkinson Bayou cutoff north of Wilkinson Bay, LA gage. Field water quality measurements were collected using a YSI EXO2 water quality sonde equipped with a data logger to capture hourly data using sensors for measuring water temperature, specific conductance, salinity, pH, oxidation and reduction potential (ORP), fluorescent dissolved organic matter (fDOM), and turbidity. Data are in a CSV file titled: "Water quality &amp; dissolved carbon in LA salt marsh"</eaover>
+      <eadetcit>He, S., Mize, S.V., Groseclose, G., Swarzenski, C.M., and Stagg, C.L., 2025, High resolution water quality and dissolved carbon data from a coastal Louisiana salt marsh from 2022 to 2023: U.S. Geological Survey data release</eadetcit>
+    </overview>
+  </eainfo>
+  <distinfo>
+    <distrib>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>U.S. Geological Survey - ScienceBase</cntorg>
+        </cntorgp>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>Denver Federal Center, Building 810, Mail Stop 302</address>
+          <city>Denver</city>
+          <state>CO</state>
+          <postal>80225</postal>
+          <country>USA</country>
+        </cntaddr>
+        <cntvoice>1-888-275-8747</cntvoice>
+        <cntemail>sciencebase@usgs.gov</cntemail>
+      </cntinfo>
+    </distrib>
+    <distliab>Unless otherwise stated, all data, metadata and related materials are considered to satisfy the quality standards relative to the purpose for which the data were collected. Although these data and associated metadata have been reviewed for accuracy and completeness and approved for release by the U.S. Geological Survey (USGS), no warranty expressed or implied is made regarding the display or utility of the data on any other system or for general or scientific purposes, nor shall the act of distribution constitute any such warranty. Any use of trade, firm, or product names is for descriptive purposes only and does not imply endorsement by the U.S. Government.</distliab>
+    <stdorder>
+      <digform>
+        <digtinfo>
+          <formname>Digital Data</formname>
+        </digtinfo>
+        <digtopt>
+          <onlinopt>
+            <computer>
+              <networka>
+                <networkr>https://doi.org/10.5066/P13GBADQ</networkr>
+              </networka>
+            </computer>
+          </onlinopt>
+        </digtopt>
+      </digform>
+      <fees>None</fees>
+    </stdorder>
+  </distinfo>
+  <metainfo>
+    <metd>20250708</metd>
+    <metc>
+      <cntinfo>
+        <cntperp>
+          <cntper>Emily Fromenthal</cntper>
+          <cntorg>Cherokee Nation System Solutions</cntorg>
+        </cntperp>
+        <cntpos>Biologist</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>700 Cajundome Blvd</address>
+          <city>Lafayette</city>
+          <state>LA</state>
+          <postal>70506</postal>
+          <country>US</country>
+        </cntaddr>
+        <cntvoice>N/A</cntvoice>
+        <cntfax>N/A</cntfax>
+        <cntemail>efromenthal@contractor.usgs.gov</cntemail>
+      </cntinfo>
+    </metc>
+    <metstdn>FGDC Biological Data Profile of the Content Standard for Digital Geospatial Metadata</metstdn>
+    <metstdv>FGDC-STD-001.1-1999</metstdv>
+  </metainfo>
+</metadata>
