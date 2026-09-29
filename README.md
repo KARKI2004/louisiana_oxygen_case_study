@@ -43,7 +43,7 @@ For six-hour simulated gaps:
 | Method | Daily-average MAE | Daily-minimum MAE | Low-hours MAE | Mean low-hours bias |
 |---|---:|---:|---:|---:|
 | Unfilled | 0.493 mg/L | 0.139 mg/L | 1.285 h/day | -1.285 h/day |
-| Training median | 0.505 mg/L | 0.139 mg/L | 1.285 h/day | -1.285 h/day |
+| Median | 0.505 mg/L | 0.139 mg/L | 1.285 h/day | -1.285 h/day |
 | Linear interpolation | **0.202 mg/L** | 0.139 mg/L | **0.763 h/day** | -0.500 h/day |
 | Random forest | 0.315 mg/L | **0.107 mg/L** | 0.935 h/day | -0.807 h/day |
 
@@ -70,17 +70,23 @@ The preferred treatment depends on the scientific summary. Interpolation was str
 
 ## Reproduce
 
-Use Python 3.11 or 3.12 (reviewed with 3.11). Download the CSV and metadata from the [USGS data release](https://doi.org/10.5066/P13GBADQ), then run from this folder:
+### Try the Process New Data page
+
+Use [the bundled synthetic CSV](examples/compatible.csv) to test **Process New Data**. Download it from the page’s **Try an example dataset** section and upload it through the CSV control. It contains invented readings and several kinds of gaps so you can review both eligible and unsupported cases.
+
+The [same compatible example is available in Google Sheets](https://docs.google.com/spreadsheets/d/1FjAOMsvJLyI15ajZxg2zrHWyXPIqfyMgsrKPijchWAA/edit?gid=1921450387#gid=1921450387). Open the sheet and choose **File → Download → Comma-separated values (.csv)** if you want to upload a copy from Sheets. Access for other people depends on the sheet's sharing settings.
+
+Use Python 3.11 or 3.12 (reviewed with 3.11). Download `Water quality & dissolved carbon in LA salt marsh.csv` from the [USGS data release](https://doi.org/10.5066/P13GBADQ) and place it in the top-level `input/` folder, beside `input/.gitkeep`. Keep the original filename. The downloaded metadata may also be kept in `input/`; the repository already contains an unchanged copy as `source_metadata.xml`. Then run from the project folder:
 
 ```bash
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-python analyze.py --data "/path/to/Water quality & dissolved carbon in LA salt marsh.csv"
+python analyze.py
 python create_brief.py
 ```
 
-On Windows, activate with `.venv\Scripts\activate`. The scripts overwrite generated files beside the code. The PDF table reads `summary.csv`; regenerate the analysis before the brief. The analysis uses a fixed random seed and records the source SHA-256 and runtime versions in `audit.json`. The review rerun used Python 3.11.15 on macOS; the original audit recorded Python 3.12.14. Forest summary MAEs differed by at most 0.000041 mg/L, while all displayed six-hour values and low-hour counts agreed. The original and revised analysis code agree in the review environment. Exact cross-environment forest reproduction is not established. Dependencies for analysis and PDF generation are included; transitive dependencies are not fully locked.
+On Windows, activate with `.venv\Scripts\activate`. To use a CSV elsewhere, pass `--data "/path/to/file.csv"`. The scripts overwrite generated files beside the code. The PDF table reads `summary.csv`; regenerate the analysis before the brief. The analysis uses a fixed random seed and records the source SHA-256 and runtime versions in `audit.json`. The review rerun used Python 3.11.15 on macOS; the original audit recorded Python 3.12.14. Forest summary MAEs differed by at most 0.000041 mg/L, while all displayed six-hour values and low-hour counts agreed. The original and revised analysis code agree in the review environment. Exact cross-environment forest reproduction is not established. Dependencies for analysis and PDF generation are included; transitive dependencies are not fully locked.
 
 ## Project files
 
@@ -90,15 +96,16 @@ On Windows, activate with `.venv\Scripts\activate`. The scripts overwrite genera
 | `create_brief.py` | Generate the one-page PDF from results |
 | `requirements.txt` | Python dependencies |
 | `source_metadata.xml` | Original USGS metadata, retained unchanged |
+| `input/.gitkeep` | Keeps the input folder in Git; downloaded files inside it stay local |
 | `audit.json` | Source checksum, counts, seed, and runtime versions |
-| `trials.csv` | One row per method and simulated gap; signed errors are estimate minus reference |
+| `trials.csv` | Generated locally by `analyze.py` and ignored by Git; one row per method and simulated gap, with signed errors as estimate minus reference |
 | `summary.csv` | Errors and low-day detection counts by method and gap duration |
 | `method_comparison.png` | Daily-summary MAE comparison; coincident lines can hide methods |
 | `data_context.png` | Available-observation daily summaries, including incomplete days; blank periods have no DO |
 | `Louisiana_Oxygen_Gap_Case_Study.pdf` | One-page research brief |
 | `.gitignore` | Excludes raw download, virtual environment, and local caches |
 
-The raw CSV is downloaded separately and should not be committed. No reconstructed time series is exported: trial rows identify the method and masked interval, and their summaries include estimates.
+The downloaded input files are ignored by Git and should not be committed. No reconstructed time series is exported: trial rows identify the method and masked interval, and their summaries include estimates.
 
 ## Sources
 

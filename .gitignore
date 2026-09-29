@@ -10,3 +10,6 @@ __pycache__/
 ._*
 __MACOSX/
 Water quality & dissolved carbon in LA salt marsh*.csv
+trials.csv
+input/*
+!input/.gitkeep

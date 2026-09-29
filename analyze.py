@@ -13,7 +13,9 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser()
-parser.add_argument("--data", required=True)
+parser.add_argument("--data", type=Path,
+                    default=ROOT / "input" / "Water quality & dissolved carbon in LA salt marsh.csv",
+                    help="USGS CSV path (default: input/Water quality & dissolved carbon in LA salt marsh.csv)")
 args = parser.parse_args()
 
 d = pd.read_csv(args.data, thousands=",")
