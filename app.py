@@ -27,7 +27,12 @@ with st.sidebar:
 
 
 def control(kind, label, *args, **kwargs):
-    kwargs.setdefault('key', 'control_'+label)
+    key=kwargs.setdefault('key', 'control_'+label)
+    # Session-state values are kept when a widget is temporarily hidden on a
+    # later stage. Avoid also passing its original default on reruns.
+    if key in st.session_state:
+        kwargs.pop('index',None)
+        kwargs.pop('value',None)
     kwargs.setdefault('on_change', invalidate)
     return getattr(kwargs.pop('target',st), kind)(label, *args, **kwargs)
 
@@ -41,6 +46,11 @@ def invalidate():
     for key in list(st.session_state):
         if key in ('oxygen_evaluation','oxygen_prepared','oxygen_output','oxygen_choice') or key.startswith(('method_','gaps_','gap_picker_')):
             del st.session_state[key]
+
+
+def reset_source_review(confirmation_key):
+    invalidate()
+    st.session_state[confirmation_key]=False
 
 
 def case_study():
@@ -214,26 +224,39 @@ def input_stage():
     with st.container(border=True):
         st.subheader('Identify the measurements')
         a,b=st.columns(2,gap='medium')
-        time_col=control('selectbox','Timestamp column',columns,target=a,index=columns.index(default_time))
-        do_col=control('selectbox','Dissolved oxygen column',columns,target=b,index=columns.index(default_do))
+        review_key='quality_'+input_key
+        time_col=control('selectbox','Timestamp column',columns,target=a,index=columns.index(default_time),
+                         on_change=reset_source_review,args=(review_key,))
+        do_col=control('selectbox','Dissolved oxygen column',columns,target=b,index=columns.index(default_do),
+                       on_change=reset_source_review,args=(review_key,))
         try:
             proposed=suggested_minutes(raw,time_col)
         except ValueError as exc:
             st.error(str(exc));return
+        st.markdown('### Before continuing: complete both required steps')
+        st.caption('* Required')
+        st.markdown('**1. Confirm the measurement units and sampling interval**')
         a,b=st.columns(2,gap='medium')
-        units=control('selectbox','Dissolved oxygen units',['Confirm units…','mg/L','Other / unknown'],target=a,key='units_'+input_key)
-        minutes=control('number_input','Confirmed sampling interval (minutes)',target=b,min_value=1.0,max_value=360.0,
+        units=control('selectbox','Dissolved oxygen units *',['Confirm units…','mg/L','Other / unknown'],target=a,key='units_'+input_key)
+        minutes=control('number_input','Sampling interval (minutes) *',target=b,min_value=1.0,max_value=360.0,
                                value=float(min(360,max(1,proposed))),key=f'interval_{input_key[:12]}_{time_col}',
-                               help=f'Most common spacing: {proposed:g} minutes. Confirm with source metadata; missing rows can make this estimate misleading.')
-        with st.expander('Quality flags and screening limits'):
+                               on_change=reset_source_review,args=(review_key,),
+                               help=f'Suggested from timestamps: {proposed:g} minutes. Confirm against source information; missing rows can make this estimate misleading.')
+        with st.expander('Quality flags and screening limits',expanded=True):
             a,b=st.columns(2,gap='medium')
-            flag=control('selectbox','Row quality flag',['No flag column']+columns,target=a)
+            flag=control('selectbox','Row quality flag',['No flag column']+columns,target=a,
+                         on_change=reset_source_review,args=(review_key,))
             upper=control('number_input','Upper oxygen screening bound (mg/L)',target=b,min_value=2.1,max_value=100.0,value=25.0,
+                                  on_change=reset_source_review,args=(review_key,),
                                   help='A configurable exclusion screen, not a universal scientific limit. Values outside 0 to this bound remain unfilled.')
             accepted=[]
             if flag!='No flag column':
-                accepted=control('multiselect','Accepted flag values',raw[flag].unique().tolist(),help='Exact matches. Rejected flags exclude oxygen and predictors on that row.')
-        quality=control('checkbox','I confirm the units, sampling interval, and input limitations mentioned.',key='quality_'+input_key)
+                accepted=control('multiselect','Accepted flag values',raw[flag].unique().tolist(),
+                                 on_change=reset_source_review,args=(review_key,),
+                                 help='Exact matches. Rejected flags exclude oxygen and predictors on that row.')
+        st.markdown('**2. Review source checks**')
+        st.caption('Verify the sampling interval against source information; review quality flags (or confirm there are none) and the oxygen screening limit above.')
+        quality=control('checkbox','I reviewed these source checks. *',key=review_key)
     with st.expander('Optional: enable random forest comparison'):
         st.caption('Four independent sensor measurements are required. No predictor imputation and no shared trained model.')
         rf_enabled=control('checkbox','Include random forest if supported')
@@ -252,8 +275,17 @@ def input_stage():
     if signature!=st.session_state.get('oxygen_settings'):
         invalidate()
         st.session_state['oxygen_settings']=signature
-    if units!='mg/L' or not quality:
-        st.info('Confirm mg/L units and source checks to continue to the gap audit.');return
+    ready=units=='mg/L' and quality
+    if not ready:
+        missing=[]
+        if units!='mg/L':
+            missing.append('select **mg/L** for oxygen units')
+        if not quality:
+            missing.append('complete **Review source checks**')
+        st.info('To continue, '+ ' and '.join(missing)+'.')
+        st.button('Check the record →',type='primary',disabled=True,
+                  help='Complete both required steps above to review the gap audit.')
+        return
     try:
         p=prepare(raw,time_col,do_col,minutes,units=units,upper_do=upper,
                   flag_col=None if flag=='No flag column' else flag,accepted_flags=accepted,
@@ -262,7 +294,7 @@ def input_stage():
         st.error(str(exc))
         st.caption('Nothing was filled. Correct the source or upload a compatible regular segment; timestamps are never moved.')
         return
-    if st.button('Check the record →',type='primary'):
+    if st.button('Check the record →',type='primary',help='Open the gap audit for this uploaded file.'):
         st.session_state['oxygen_prepared']=p
         move(2)
 

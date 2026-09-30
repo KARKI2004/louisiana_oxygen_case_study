@@ -1,4 +1,5 @@
 from pathlib import Path
+import argparse
 import json
 import pandas as pd
 import matplotlib
@@ -12,12 +13,17 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
 
 ROOT = Path(__file__).resolve().parent
-OUT = ROOT / "Louisiana_Oxygen_Gap_Case_Study.pdf"
+parser = argparse.ArgumentParser(description="Create a brief from an existing case-study analysis run.")
+parser.add_argument("--output-dir", type=Path, default=ROOT,
+                    help="Directory containing analysis results; the PDF is written there too")
+args = parser.parse_args()
+RESULTS = args.output_dir.resolve()
+OUT = RESULTS / "Louisiana_Oxygen_Gap_Case_Study.pdf"
 FONT_DIR = Path(matplotlib.get_data_path()) / "fonts" / "ttf"
 pdfmetrics.registerFont(TTFont("DV", str(FONT_DIR / "DejaVuSans.ttf")))
 pdfmetrics.registerFont(TTFont("DV-Bold", str(FONT_DIR / "DejaVuSans-Bold.ttf")))
-audit = json.loads((ROOT / "audit.json").read_text())
-summary = pd.read_csv(ROOT / "summary.csv")
+audit = json.loads((RESULTS / "audit.json").read_text())
+summary = pd.read_csv(RESULTS / "summary.csv")
 six_hour = summary.loc[summary.gap_hours == 6].set_index("method")
 doc = SimpleDocTemplate(str(OUT), pagesize=letter, rightMargin=38, leftMargin=38,
                         topMargin=30, bottomMargin=28)
@@ -42,7 +48,7 @@ story = [
     Paragraph("When consecutive oxygen readings are missing, how well do common methods preserve the daily average, daily minimum, and hours below an exploratory 2 mg/L threshold?", styles["B"]),
     Paragraph("Data and design", styles["H"]),
     Paragraph(f"The public record contains {audit['source_rows']:,} rows from June 2022 to October 2023, including {audit['observed_do_rows']:,} oxygen observations. Training precedes July 1, 2023; testing uses {audit['complete_test_days']} complete days in July-October. Identical interior 1-, 3-, and 6-hour gaps retain observed endpoints. Each duration is repeated 20 times per day. Methods are unfilled data, a training median, linear interpolation, and a random forest.", styles["B"]),
-    Image(str(ROOT/"method_comparison.png"), width=7.05*inch, height=2.22*inch),
+    Image(str(RESULTS/"method_comparison.png"), width=7.05*inch, height=2.22*inch),
 ]
 
 data = [["Six-hour gap", "Average MAE", "Minimum MAE", "Low-hours MAE"]]

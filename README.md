@@ -5,6 +5,40 @@ Computer Science – Data Science, Southeastern Louisiana University
 
 An independent data-science methods case study using public USGS observations from Wilkinson Bayou, Louisiana.
 
+## Run the app locally
+
+Use Python 3.11 (tested with 3.11.15). From the repository folder:
+
+```bash
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m streamlit run app.py --server.address=127.0.0.1
+```
+
+On Windows, activate with `.venv\Scripts\activate`. Open the local URL printed by Streamlit. The app includes the saved case study and synthetic examples; the original USGS download is optional unless you want to inspect its raw gaps or reproduce the analysis. See [APP_GUIDE.md](APP_GUIDE.md) for the upload workflow.
+
+## Streamlit hosting setup
+
+The repository is prepared for Streamlit Community Cloud. Hosting is a separate step; nothing is deployed by these instructions.
+
+When you are ready, select this repository and your intended branch in Community Cloud, set the main file to `app.py`, and choose **Python 3.11** in Advanced settings. The root `requirements.txt` pins the direct dependencies, including Streamlit. `requirements-app.txt` is a compatibility alias for the same environment. No secrets or external services are required.
+
+Keep `.streamlit/config.toml`, `examples/`, `summary.csv`, `audit.json`, both saved PNGs, and the PDF brief committed alongside the Python files. These small published artifacts support the hosted case study. Do not run the analysis as a deployment step. The hosted app works without the ignored `input/` download; it explains when the optional raw-source view is unavailable.
+
+Uploads are limited to 10 MB. Processing uses session memory, and users should download their results before leaving or resetting the session. The repository's local output folders are for command-line research runs, not persistent hosted storage. Never commit `.streamlit/secrets.toml` or `.env` files.
+
+See Streamlit's [dependency instructions](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/app-dependencies) and [deployment settings](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy).
+
+## Check the environment
+
+```bash
+python -m pip check
+python -m unittest discover -s tests -v
+```
+
+The tests cover the analysis workflow, exports, charts, and Streamlit pages. One additional test uses the original USGS CSV and is skipped when that optional download is absent. A local test pass does not verify the remote hosting environment.
+
 ## Research question
 
 When consecutive hourly dissolved-oxygen readings are missing, how well do common reconstruction methods preserve three daily summaries: average oxygen, minimum oxygen, and hours below 2 mg/L?
@@ -82,11 +116,17 @@ Use Python 3.11 or 3.12 (reviewed with 3.11). Download `Water quality & dissolve
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-python analyze.py
-python create_brief.py
+python analyze.py --output-dir outputs/louisiana-reproduction
+python create_brief.py --output-dir outputs/louisiana-reproduction
 ```
 
-On Windows, activate with `.venv\Scripts\activate`. To use a CSV elsewhere, pass `--data "/path/to/file.csv"`. The scripts overwrite generated files beside the code. The PDF table reads `summary.csv`; regenerate the analysis before the brief. The analysis uses a fixed random seed and records the source SHA-256 and runtime versions in `audit.json`. The review rerun used Python 3.11.15 on macOS; the original audit recorded Python 3.12.14. Forest summary MAEs differed by at most 0.000041 mg/L, while all displayed six-hour values and low-hour counts agreed. The original and revised analysis code agree in the review environment. Exact cross-environment forest reproduction is not established. Dependencies for analysis and PDF generation are included; transitive dependencies are not fully locked.
+On Windows, activate with `.venv\Scripts\activate`. To use a CSV elsewhere, pass `--data "/path/to/file.csv"`. The commands above write to an ignored run folder, leaving the published app assets in place. Use a different folder for each run you want to retain. Pass the same `--output-dir` to both scripts: the PDF reads that folder’s `summary.csv`, `audit.json`, and comparison plot. Without `--output-dir`, both scripts retain their original behavior and overwrite generated files beside the code. Regenerate the analysis before the brief. The analysis uses a fixed random seed and records the source SHA-256 and runtime versions in `audit.json`. The review rerun used Python 3.11.15 on macOS; the original audit recorded Python 3.12.14. Forest summary MAEs differed by at most 0.000041 mg/L, while all displayed six-hour values and low-hour counts agreed. The original and revised analysis code agree in the review environment. Exact cross-environment forest reproduction is not established. Dependencies for analysis and PDF generation are included; transitive dependencies are not fully locked.
+
+## Add another reproducible project
+
+Use [projects/template/](projects/template/README.md) as a starting point. Copy it to `projects/your-project/`, add your script and run instructions, and keep downloaded data in its `input/` folder and generated results in its `outputs/` folder. Both folders contain `.gitkeep` placeholders; their contents are ignored, while project code and documentation remain trackable. See [projects/README.md](projects/README.md) for what to record.
+
+The root analysis and PDF scripts are specific to this Louisiana case study, with fixed dataset checks and report text. For other data, use **Process New Data** or write a project-specific analysis. Do not overwrite the published case-study artifacts with another project's results.
 
 ## Project files
 
@@ -94,7 +134,14 @@ On Windows, activate with `.venv\Scripts\activate`. To use a CSV elsewhere, pass
 |---|---|
 | `analyze.py` | Load, validate, split, simulate gaps, evaluate, and plot |
 | `create_brief.py` | Generate the one-page PDF from results |
-| `requirements.txt` | Python dependencies |
+| `app.py`, `app_ui.py`, `oxygen_workflow.py` | Streamlit entry point, interface, and upload analysis |
+| `requirements.txt` | Pinned direct dependencies for hosting and local reproduction |
+| `requirements-app.txt` | Compatibility alias for `requirements.txt` |
+| `.streamlit/config.toml` | Shared theme, upload limit, and server settings |
+| `examples/` | Small synthetic CSVs committed for demonstrations and tests |
+| `tests/` | Automated workflow, chart, and app checks |
+| `outputs/.gitkeep` | Keeps a local results folder; generated contents are ignored |
+| `projects/` | Reproducible-project instructions and a folder template |
 | `source_metadata.xml` | Original USGS metadata, retained unchanged |
 | `input/.gitkeep` | Keeps the input folder in Git; downloaded files inside it stay local |
 | `audit.json` | Source checksum, counts, seed, and runtime versions |
@@ -105,7 +152,7 @@ On Windows, activate with `.venv\Scripts\activate`. To use a CSV elsewhere, pass
 | `Louisiana_Oxygen_Gap_Case_Study.pdf` | One-page research brief |
 | `.gitignore` | Excludes raw download, virtual environment, and local caches |
 
-The downloaded input files are ignored by Git and should not be committed. No reconstructed time series is exported: trial rows identify the method and masked interval, and their summaries include estimates.
+The downloaded input files are ignored by Git and should not be committed. The command-line case-study analysis exports trial summaries, not a reconstructed time series. The app can separately export a processed CSV with observed and estimated values identified.
 
 ## Sources
 

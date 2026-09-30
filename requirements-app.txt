@@ -1,2 +1,2 @@
+# Compatibility alias; requirements.txt is the deployment manifest.
 -r requirements.txt
-streamlit==1.64.0

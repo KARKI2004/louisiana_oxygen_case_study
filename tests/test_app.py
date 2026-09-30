@@ -17,8 +17,8 @@ def synthetic():
     at=AppTest.from_file(str(ROOT/'app.py')).run(timeout=30)
     at.session_state['uploaded_bytes']=(ROOT/'examples'/'compatible.csv').read_bytes()
     find(at.radio,'Pages').set_value('Process New Data').run()
-    find(at.selectbox,'Dissolved oxygen units').set_value('mg/L').run()
-    at.checkbox[0].check().run()
+    find(at.selectbox,'Dissolved oxygen units *').set_value('mg/L').run()
+    find(at.checkbox,'I reviewed these source checks. *').check().run()
     return at
 
 
@@ -42,6 +42,28 @@ def choose_method(at, method):
 
 
 class AppTests(unittest.TestCase):
+    def test_stage_one_required_steps_are_separate_and_gate_the_gap_audit(self):
+        at=AppTest.from_file(str(ROOT/'app.py')).run(timeout=30)
+        at.session_state['uploaded_bytes']=(ROOT/'examples'/'compatible.csv').read_bytes()
+        find(at.radio,'Pages').set_value('Process New Data').run()
+        self.assertTrue(any('complete both required steps' in x.value.lower() for x in at.markdown))
+        self.assertTrue(find(at.button,'Check the record →').disabled)
+        self.assertTrue(any('Review source checks' in x.value for x in at.markdown))
+
+        find(at.selectbox,'Dissolved oxygen units *').set_value('mg/L').run()
+        self.assertTrue(find(at.button,'Check the record →').disabled)
+        review=find(at.checkbox,'I reviewed these source checks. *')
+        review.check().run()
+        self.assertFalse(find(at.button,'Check the record →').disabled)
+        find(at.number_input,'Upper oxygen screening bound (mg/L)').set_value(24.0).run()
+        self.assertFalse(find(at.checkbox,'I reviewed these source checks. *').value)
+        self.assertTrue(find(at.button,'Check the record →').disabled)
+        find(at.checkbox,'I reviewed these source checks. *').check().run()
+        self.assertFalse(find(at.button,'Check the record →').disabled)
+        find(at.button,'Check the record →').click().run()
+        self.assertEqual(at.session_state['oxygen_stage'],2)
+        self.assertFalse(at.exception)
+
     def test_upload_ingress_and_problematic_file(self):
         # AppTest does not drive a native file picker. Supply its returned byte stream,
         # then exercise the real upload branch, validation, evaluation, and export UI.
@@ -52,8 +74,8 @@ class AppTests(unittest.TestCase):
                 self.assertFalse(any(x.label=='Input' for x in at.selectbox))
                 self.assertTrue(any(x.label=='Try an example dataset' for x in at.expander))
                 self.assertFalse(any('Next: map your columns' in x.value for x in at.markdown))
-                find(at.selectbox,'Dissolved oxygen units').set_value('mg/L').run()
-                at.checkbox[0].check().run()
+                find(at.selectbox,'Dissolved oxygen units *').set_value('mg/L').run()
+                find(at.checkbox,'I reviewed these source checks. *').check().run()
                 if filename=='problematic.csv':
                     self.assertTrue(any('Irregular timestamps' in e.value for e in at.error))
                     self.assertFalse(any(x.label=='Run method tests' for x in at.button))
@@ -69,8 +91,9 @@ class AppTests(unittest.TestCase):
         at=synthetic()
         find(at.selectbox,'Row quality flag').set_value('quality').run()
         at.multiselect[0].set_value(['good']).run()
-        at.checkbox[1].check().run()
-        at.checkbox[2].check().run()
+        find(at.checkbox,'I reviewed these source checks. *').check().run()
+        find(at.checkbox,'Include random forest if supported').check().run()
+        find(at.checkbox,'Predictors are independent measurements in the stated units, not derived from oxygen; their quality flags have been applied.').check().run()
         evaluate_ui(at)
         self.assertFalse(at.exception)
         method=find(at.selectbox,'Method to apply')
@@ -90,7 +113,7 @@ class AppTests(unittest.TestCase):
         self.assertEqual(find(at.selectbox,'Method to apply').value,'Random forest')
         self.assertEqual(find(at.multiselect,'Gaps to fill').value,[2])
         back_to_input(at)
-        self.assertEqual(find(at.selectbox,'Dissolved oxygen units').value,'mg/L')
+        self.assertEqual(find(at.selectbox,'Dissolved oxygen units *').value,'mg/L')
         find(at.number_input,'Upper oxygen screening bound (mg/L)').set_value(24.0).run()
         self.assertFalse(any(x.label=='Method to apply' for x in at.selectbox))
         self.assertFalse(any(x.proto.label=='Download separate processed CSV' for x in at.get('download_button')))
@@ -174,8 +197,8 @@ class AppTests(unittest.TestCase):
         at=AppTest.from_file(str(ROOT/'app.py')).run(timeout=30)
         at.session_state['uploaded_bytes']=segment
         find(at.radio,'Pages').set_value('Process New Data').run()
-        find(at.selectbox,'Dissolved oxygen units').set_value('mg/L').run()
-        at.checkbox[0].check().run()
+        find(at.selectbox,'Dissolved oxygen units *').set_value('mg/L').run()
+        find(at.checkbox,'I reviewed these source checks. *').check().run()
         evaluate_ui(at)
         self.assertFalse(at.exception)
         self.assertFalse(at.error)
@@ -194,8 +217,8 @@ class AppTests(unittest.TestCase):
         with patch('streamlit.file_uploader',return_value=BytesIO(original)):
             at=AppTest.from_file(str(ROOT/'app.py')).run(timeout=30)
             find(at.radio,'Pages').set_value('Process New Data').run()
-            find(at.selectbox,'Dissolved oxygen units').set_value('mg/L').run()
-            at.checkbox[0].check().run()
+            find(at.selectbox,'Dissolved oxygen units *').set_value('mg/L').run()
+            find(at.checkbox,'I reviewed these source checks. *').check().run()
             self.assertTrue(any('Irregular timestamps' in e.value for e in at.error))
             self.assertFalse(any(x.label=='Method to apply' for x in at.selectbox))
             self.assertFalse(any(x.proto.label=='Download separate processed CSV' for x in at.get('download_button')))

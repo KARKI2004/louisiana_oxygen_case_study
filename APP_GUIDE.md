@@ -1,6 +1,6 @@
 # Local dissolved-oxygen app
 
-The app is separate from the original case study. `analyze.py`, `create_brief.py`, the original README and requirements, saved CSV/JSON results, plots, source metadata, and PDF are unchanged. Do not run the original scripts merely to launch the app: they overwrite their own generated artifacts.
+The app reads the saved case-study results and handles uploaded data separately. Launching it does not require running the analysis or PDF scripts. Those scripts write beside the code by default; use `--output-dir` to keep reproduction runs separate. See the README for deployment and reproduction steps.
 
 ## Run
 

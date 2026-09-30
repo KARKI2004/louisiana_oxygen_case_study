@@ -1,15 +1,53 @@
+# Python environments and caches
 .venv/
-REVIEW.md
+venv/
+env/
 __pycache__/
 *.py[cod]
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 .cache/
+.ipynb_checkpoints/
+.coverage
+.coverage.*
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Local credentials and configuration
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# OS, editors, and temporary files
 .DS_Store
 ._*
 __MACOSX/
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.log
+
+# Local review notes and original downloads
+/REVIEW.md
 Water quality & dissolved carbon in LA salt marsh*.csv
-trials.csv
-input/*
-!input/.gitkeep
+/input/*
+!/input/.gitkeep
+
+# Generated runs; keep the directory in a fresh clone
+/outputs/*
+!/outputs/.gitkeep
+/trials.csv
+
+# Per-project data and results stay local; code and documentation are tracked
+/projects/**/input/**
+!/projects/**/input/**/
+!/projects/**/input/**/.gitkeep
+/projects/**/outputs/**
+!/projects/**/outputs/**/
+!/projects/**/outputs/**/.gitkeep

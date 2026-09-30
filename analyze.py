@@ -16,7 +16,11 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--data", type=Path,
                     default=ROOT / "input" / "Water quality & dissolved carbon in LA salt marsh.csv",
                     help="USGS CSV path (default: input/Water quality & dissolved carbon in LA salt marsh.csv)")
+parser.add_argument("--output-dir", type=Path, default=ROOT,
+                    help="Directory for generated results (default: project root)")
 args = parser.parse_args()
+OUTPUT = args.output_dir.resolve()
+OUTPUT.mkdir(parents=True, exist_ok=True)
 
 d = pd.read_csv(args.data, thousands=",")
 d["timestamp"] = pd.to_datetime(d["Timestamp_UTCminus6"], format="mixed")
@@ -93,7 +97,7 @@ for date, day in complete_days:
                 })
 
 trials = pd.DataFrame(rows)
-trials.to_csv(ROOT/"trials.csv", index=False)
+trials.to_csv(OUTPUT/"trials.csv", index=False)
 for c in ["daily_mean_error", "daily_minimum_error", "low_hours_error"]:
     trials[c.replace("_error", "_absolute_error")] = trials[c].abs()
 summary = trials.groupby(["gap_hours", "method"]).agg(
@@ -108,7 +112,7 @@ summary = trials.groupby(["gap_hours", "method"]).agg(
     false_low_days=("false_low_day", "sum"),
 ).reset_index()
 summary["missed_low_day_rate"] = summary.missed_low_days / summary.true_low_day_trials
-summary.to_csv(ROOT/"summary.csv", index=False)
+summary.to_csv(OUTPUT/"summary.csv", index=False)
 
 plt.rcParams.update({"font.size": 10.5, "axes.spines.top": False, "axes.spines.right": False})
 colors = {"Unfilled":"#777777", "Training median":"#b07926",
@@ -123,7 +127,7 @@ for ax, (metric, title, ylabel) in zip(axes, specs):
         ax.plot(s.gap_hours, s[metric], "o-", label=method, color=color)
     ax.set(title=title, xlabel="Simulated gap (hours)", ylabel=ylabel, xticks=[1,3,6])
 axes[-1].legend(fontsize=8.5)
-fig.savefig(ROOT/"method_comparison.png", dpi=180)
+fig.savefig(OUTPUT/"method_comparison.png", dpi=180)
 plt.close(fig)
 
 fig, ax = plt.subplots(figsize=(11, 4.2), layout="constrained")
@@ -135,7 +139,7 @@ ax.axhline(threshold, color="#b24c3d", linestyle="--", label="Exploratory 2 mg/L
 ax.axvline(pd.Timestamp("2023-07-01"), color="#7352a0", linestyle=":", label="Test period begins")
 ax.set(ylabel="Dissolved oxygen (mg/L)", title="Wilkinson Bayou, Louisiana • hourly USGS observations")
 ax.legend(fontsize=8.5, ncol=2)
-fig.savefig(ROOT/"data_context.png", dpi=180)
+fig.savefig(OUTPUT/"data_context.png", dpi=180)
 plt.close(fig)
 
 audit = {
@@ -148,6 +152,6 @@ audit = {
     "matplotlib": matplotlib.__version__,
     "pandas": pd.__version__, "numpy": np.__version__, "sklearn": sklearn.__version__,
 }
-(ROOT/"audit.json").write_text(json.dumps(audit, indent=2))
+(OUTPUT/"audit.json").write_text(json.dumps(audit, indent=2))
 print(summary.round(4).to_string(index=False))
 print(json.dumps(audit))
